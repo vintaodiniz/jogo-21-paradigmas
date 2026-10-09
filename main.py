@@ -1,3 +1,37 @@
+from logica import jogar_rodada
+from economia import inicializar_banca, gerenciar_aposta, atualizar_saldo, verificar_fim_jogo
+
+
+def iniciar_partida():
+    """Executa a partida completa: várias rodadas com saldo e apostas."""
+    saldo = inicializar_banca()
+    rodada = 1
+    print(f"\n🎰 Partida iniciada! Seu saldo inicial: R$ {saldo}")
+    print("Meta: alcançar R$ 50.000 para falir o dono do jogo!")
+
+    while True:
+        # Verificar se o jogo acabou (saldo zerado ou meta atingida)
+        status = verificar_fim_jogo(saldo)
+        if status != "continuar":
+            break
+
+        print(f"\n--- RODADA {rodada} ---")
+        rodada = rodada + 1
+
+        # Solicitar aposta ao jogador
+        aposta = gerenciar_aposta(saldo)
+        if aposta == 0:
+            break
+
+        # Jogar a rodada de cartas (logica.py)
+        resultado = jogar_rodada()
+
+        # Atualizar o saldo com base no resultado (economia.py)
+        saldo = atualizar_saldo(saldo, aposta, resultado)
+        print(f"\n💰 Saldo atual: R$ {saldo}")
+
+    print("\nVoltando ao menu principal...")
+    input("Pressione ENTER para continuar...")
 
 
 def exibir_regras():
@@ -24,7 +58,7 @@ def main():
         opcao = input("Escolha uma opção (1-3): ")
         
         if opcao == "1":
-            print("\n[Aviso] O modo de jogo será iniciado em breve!")
+            iniciar_partida()
         elif opcao == "2":
             exibir_regras()
         elif opcao == "3":

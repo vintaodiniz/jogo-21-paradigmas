@@ -70,7 +70,7 @@ def jogar_rodada():
 
     # Verificar Blackjack imediato (21 pontos com 2 cartas)
     if calcular_pontos(mao_jogador) == 21:
-        print("\n🔥 BLACKJACK! Você fez 21 pontos de cara!")
+        print("\n[!] BLACKJACK! Você fez 21 pontos de cara!")
         exibir_mao("Banca  ", mao_banca)
         if calcular_pontos(mao_banca) == 21:
             print("A banca também tem 21! Empate!")
@@ -89,7 +89,7 @@ def jogar_rodada():
 
             pontos_jogador = calcular_pontos(mao_jogador)
             if pontos_jogador > 21:
-                print("\n💥 Estourou! Passou de 21 pontos. Derrota na rodada.")
+                print("\n[X] Estourou! Passou de 21 pontos. Derrota na rodada.")
                 return "derrota"
             elif pontos_jogador == 21:
                 print("  Você atingiu 21 pontos exatos!")
@@ -123,14 +123,14 @@ def jogar_rodada():
     print(f"  Jogador: {pontos_jogador} pontos | Banca: {pontos_banca} pontos")
 
     if pontos_banca > 21:
-        print("  🎉 A banca estourou! Você venceu!")
+        print("  [VITORIA] A banca estourou! Você venceu!")
         return "vitoria"
     elif pontos_jogador > pontos_banca:
-        print("  🎉 Você fez mais pontos! Vitória!")
+        print("  [VITORIA] Você fez mais pontos! Vitória!")
         return "vitoria"
     elif pontos_jogador < pontos_banca:
-        print("  ❌ A banca fez mais pontos. Derrota!")
+        print("  [DERROTA] A banca fez mais pontos. Derrota!")
         return "derrota"
     else:
-        print("  🤝 Mesma pontuação. Empate!")
+        print("  [EMPATE] Mesma pontuação. Empate!")
         return "empate"

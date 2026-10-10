@@ -6,7 +6,7 @@ def iniciar_partida():
     """Executa a partida completa: várias rodadas com saldo e apostas."""
     saldo = inicializar_banca()
     rodada = 1
-    print(f"\n🎰 Partida iniciada! Seu saldo inicial: R$ {saldo}")
+    print(f"\n[PARTIDA INICIADA] Seu saldo inicial: R$ {saldo}")
     print("Meta: alcançar R$ 50.000 para falir o dono do jogo!")
 
     while True:
@@ -28,7 +28,15 @@ def iniciar_partida():
 
         # Atualizar o saldo com base no resultado (economia.py)
         saldo = atualizar_saldo(saldo, aposta, resultado)
-        print(f"\n💰 Saldo atual: R$ {saldo}")
+        print(f"\nSaldo atual: R$ {saldo}")
+
+        # Checar se a partida encerrou antes de perguntar sobre nova rodada
+        if verificar_fim_jogo(saldo) != "continuar":
+            break
+
+        proxima = input("\nDeseja jogar mais uma rodada? (s/n): ").strip().lower()
+        if proxima == 'n':
+            break
 
     print("\nVoltando ao menu principal...")
     input("Pressione ENTER para continuar...")

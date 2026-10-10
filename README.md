@@ -5,7 +5,7 @@ Repositório do projeto avaliativo da disciplina de Paradigmas de Programação,
 ## Integrantes e Contribuições
 A atividade foi desenvolvida em grupo, com a participação e contribuição de cada integrante dividida da seguinte forma:
 * **Victor Tadeu Diniz Kos Silva (GitHub: vintaodiniz):** Responsável pela criação das pastas do projeto, pela organização do ficheiro `main.py` e pela criação deste `README`.
-* **[Nome do Integrante 2]:** [Escrevam o que vocês fizeram aqui]
+* **Thiago Araújo:** Responsável pelo módulo `logica.py`: sorteio das cartas, cálculo de pontos com adaptação dinâmica do valor do Ás (11 ou 1), controle dos turnos do jogador e da banca (dealer), integração das rodadas com contador em `main.py` e testes do módulo.
 * **Alexandre (completar nome e usuário do GitHub):** Responsável pelo módulo `economia.py`: saldo inicial, validação das apostas, atualização do saldo e condições de encerramento, com testes do módulo.
 
 ## Descrição do Problema
@@ -49,9 +49,7 @@ R$ 900 ou R$ 1.000, respectivamente.
 
 ### Integração com as rodadas
 
-`main.py` ainda contém somente o menu e `logica.py` está vazio nesta branch.
-Portanto, o módulo está disponível, mas o jogo completo ainda precisa ser integrado.
-A equipe deve seguir esta sequência:
+A integração das rodadas foi concluída no ficheiro `main.py`, conectando o fluxo de cartas de `logica.py` com o sistema financeiro de `economia.py`. O ciclo opera na seguinte sequência:
 
 1. Chamar `inicializar_banca()` uma vez ao iniciar uma nova partida.
 2. Verificar `verificar_fim_jogo(saldo)` antes de começar outra rodada.
@@ -88,6 +86,54 @@ função para liquidar a rodada. Um cuidado de integração é evitar descontar 
 aposta duas vezes. Uma possível melhoria é permitir cancelar a aposta e voltar
 ao menu. A equipe deve complementar a reflexão com as dificuldades que vivenciou.
 
+## Módulo de lógica do jogo (Thiago)
+
+O módulo `logica.py` implementa toda a mecânica de cartas, pontuação e regras clássicas do Jogo 21 (Blackjack).
+
+### Baralho e Valores das Cartas
+
+- As cartas compreendem os valores numéricos de `2` a `10`, as figuras `'J'`, `'Q'` e `'K'` (que valem 10 pontos cada) e o Ás `'A'`.
+- A função `sortear_carta()` sorteia uma carta aleatória utilizando a biblioteca nativa `random`.
+- A função `valor_da_carta(carta)` retorna o valor numérico inicial da carta sorteada.
+
+### Cálculo de Pontos e Tratamento do Ás
+
+A função `calcular_pontos(mao)` calcula o total de pontos da mão, aplicando a regra clássica do Ás no Blackjack:
+- O Ás vale inicialmente **11 pontos**, permitindo atingir Blackjack (21 pontos) logo nas cartas de saída (ex: `['A', 10] = 21`).
+- Se a soma total ultrapassar 21 e a mão contiver um ou mais Áses, o algoritmo converte iterativamente o valor de cada Ás para **1 ponto** (subtraindo 10 do total acumulado) através de um laço `while`, até que a pontuação fique em 21 ou menos.
+
+### Fluxo da Rodada (`jogar_rodada`)
+
+A função `jogar_rodada()` conduz uma rodada completa entre o jogador e a banca (máquina):
+1. **Distribuição Inicial:** O jogador e a banca recebem duas cartas cada. A segunda carta da banca é mantida oculta (`exibir_mao(esconder_segunda=True)`).
+2. **Verificação de Blackjack Inicial:** Caso o jogador atinja 21 pontos logo na saída, a banca revela sua segunda carta: se a banca também tiver 21, a rodada empata (`"empate"`); caso contrário, o jogador vence imediatamente (`"vitoria"`).
+3. **Turno do Jogador:** O jogador escolhe iterativamente se deseja comprar nova carta (`'s'`) ou parar (`'n'`). Se ultrapassar 21 pontos, estoura e a derrota é imediata (`"derrota"`).
+4. **Turno da Banca:** Ao parar sem estourar, a banca revela sua mão e continua comprando cartas automaticamente enquanto sua pontuação for inferior a 17 pontos.
+5. **Determinação do Vencedor:** Retorna `"vitoria"`, `"derrota"` ou `"empate"` comparando as pontuações:
+   - Se a banca estourar (> 21) ou o jogador tiver mais pontos que a banca: `"vitoria"`.
+   - Se a banca tiver mais pontos que o jogador: `"derrota"`.
+   - Se ambos tiverem a mesma pontuação: `"empate"`.
+
+### Conceitos imperativos presentes na lógica
+
+- **Sequência:** Fluxo linear e ordenado: distribuição inicial, turno do jogador, turno da banca e encerramento com liquidação.
+- **Variáveis e atribuições:** Manipulação de listas mutáveis (`mao_jogador`, `mao_banca`) e variáveis contadoras (`pontos`, `quantidade_ases`).
+- **Estruturas de Decisão:** Uso de `if/elif/else` para avaliar figuras, detectar 21 imediato, verificar estouro e comparar pontuações.
+- **Estruturas de Repetição:** Laços `while` que controlam a compra contínua do jogador, a inteligência da banca (comprar até 17) e o laço de conversão do Ás.
+- **Funções e Procedimentos:** Separação modular de responsabilidades (`sortear_carta`, `valor_da_carta`, `calcular_pontos`, `exibir_mao`, `jogar_rodada`).
+
+### Validação e testes do módulo
+
+Execute `python -m unittest -v test_logica` na pasta do projeto. Os testes utilizam a biblioteca padrão `unittest` com mocks e validam:
+- Sorteio de cartas dentro do conjunto válido.
+- Valores nominais de números, figuras e Ás.
+- Cálculo de pontuações sem Ás e com múltiplos Áses (conversão de 11 para 1).
+- Cenários simulados de Blackjack inicial, estouro do jogador e vitória por pontos sobre a banca.
+
+Para rodar a suíte completa de testes de ambos os módulos (economia e lógica):
+`python -m unittest -v test_economia test_logica`
+
 ## Apresentação do Projeto
 Abaixo encontra-se o link com a demonstração da aplicação em pleno funcionamento:
 * [**Clique aqui para assistir ao vídeo de apresentação da equipa**](URL_DO_VIDEO_AQUI)
+

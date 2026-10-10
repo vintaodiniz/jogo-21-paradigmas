@@ -41,7 +41,8 @@ def exibir_regras():
     print("1. O objetivo é chegar a 21 pontos ou perto, sem passar.")
     print("2. Cartas de 2 a 10 valem o próprio valor.")
     print("3. J, Q e K valem 10 pontos.")
-    print("4. Quem passar de 21 pontos estoura e perde a rodada.")
+    print("4. Ás valem 1 ou 11 pontos, dependendo do contexto.")
+    print("5. Quem passar de 21 pontos estoura e perde a rodada.")
     print("========================================")
     input("\nPressione ENTER para voltar ao menu...")
 

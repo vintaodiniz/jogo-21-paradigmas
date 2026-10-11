@@ -5,7 +5,7 @@ Repositório do projeto avaliativo da disciplina de Paradigmas de Programação,
 ## Integrantes e Contribuições
 A atividade foi desenvolvida em grupo, com a participação e contribuição de cada integrante dividida da seguinte forma:
 * **Victor Tadeu Diniz Kos Silva (GitHub: vintaodiniz):** Responsável pela criação das pastas do projeto, pela organização do ficheiro `main.py` e pela criação deste `README`.
-* **Thiago Araújo:** Responsável pelo módulo `logica.py`: sorteio das cartas, cálculo de pontos com adaptação dinâmica do valor do Ás (11 ou 1), controle dos turnos do jogador e da banca (dealer), integração das rodadas com contador em `main.py` e testes do módulo.
+* **Thiago Araújo (Github: Thiaarjo):** Responsável pelo módulo `logica.py`: sorteio das cartas, cálculo de pontos com adaptação dinâmica do valor do Ás (11 ou 1), controle dos turnos do jogador e da banca (dealer), integração das rodadas com contador em `main.py` e testes do módulo.
 * **Alexandre (completar nome e usuário do GitHub):** Responsável pelo módulo `economia.py`: saldo inicial, validação das apostas, atualização do saldo e condições de encerramento, com testes do módulo.
 
 ## Descrição do Problema
@@ -135,5 +135,5 @@ Para rodar a suíte completa de testes de ambos os módulos (economia e lógica)
 
 ## Apresentação do Projeto
 Abaixo encontra-se o link com a demonstração da aplicação em pleno funcionamento:
-* [**Clique aqui para assistir ao vídeo de apresentação da equipa**](URL_DO_VIDEO_AQUI)
+* [**Clique aqui para assistir ao vídeo de apresentação da equipa**](https://youtu.be/qquRw4paRGU?is=fU4ksKfpzLwf0VtT)
 
